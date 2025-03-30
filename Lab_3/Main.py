@@ -3,6 +3,8 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
 
+from Vova_variant import VovaUI
+
 
 class App(tk.Tk):
     def __init__(self):
@@ -76,27 +78,15 @@ class App(tk.Tk):
             years = int(years)
 
             if variant == "Вова":
-                pass
+                VovaUI.StatisticWindow(n, years)  # Запуск нового окна для варианта 11
             elif variant == "Ваня":
                 pass
 
     def run(self):
         self.mainloop()
 
-    def _Vova_task(self, n: int):
-        pass
-
     def _Vanya_task(self, n: int):
         pass
-
-    """
-        Идея такая:
-        По нажатию кнопки открывать новое окно, и в нем реализовывать свой вариант
-        (строить графики, таблицы и т.п.)
-
-        Чтобы ничего друг другу не поломать, разделил работу на 2 функции выше. 
-        Работаем каждый в своей функции 
-    """
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 import sqlite3
+import os
 
 from collections import deque
 
@@ -35,7 +36,10 @@ class DatabaseWork:
     """
 
     def __init__(self):
-        self.connection = sqlite3.connect("var_11_database.db")
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        db_path = os.path.join(current_dir, 'var_11_database.db')
+
+        self.connection = sqlite3.connect(db_path)
         self.cursor = self.connection.cursor()
 
     def get_country_data(self, country_name: str) -> list[tuple[str, int, int]]:

@@ -2,11 +2,10 @@ import tkinter as tk
 
 from tkinter import ttk
 
-import matplotlib
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-from VovaLogic import DatabaseWork, SlicePrognoses
+from .VovaLogic import DatabaseWork, SlicePrognoses  # относительный импорт внутри пакета
 
 
 class StatisticWindow(tk.Tk):
@@ -19,6 +18,8 @@ class StatisticWindow(tk.Tk):
 
         super().__init__()
         self.title("Variant 11")
+        self.state("zoomed")
+        self.resizable(False, False)
 
         # region table_init
         self._table_frame = ttk.Frame(master=self, borderwidth=2, relief=tk.SOLID, padding=5)
@@ -33,7 +34,7 @@ class StatisticWindow(tk.Tk):
         self._graphic_frame = ttk.Frame(master=self, borderwidth=2, relief=tk.SOLID, padding=5)
         self._graphic_frame.pack(padx=10, pady=10)
 
-        self._fig = Figure(figsize=(5, 3), dpi=150)
+        self._fig = Figure(figsize=(8, 4), dpi=120)
         self._ax = self._fig.add_subplot()
         self._ax.set_title("Графики и прогнозы")
         self._ax.set_xlabel("Years")
@@ -64,25 +65,23 @@ class StatisticWindow(tk.Tk):
 
             if country == "Франция":
                 self._ax.plot(range(data[0][0], data[-1][0] + 1), [x[1] for x in data],
-                              'r', marker='o', markersize=2, label="Франция")
+                              'r', marker='o', markersize=3, label="Франция")
                 self._ax.plot([int(x[0]) for x in new_data], [x[1] for x in new_data],
-                              '--r', marker='o', markersize=2)
+                              '--r', marker='o', markersize=3)
             elif country == "США":
                 self._ax.plot(range(data[0][0], data[-1][0] + 1), [x[1] for x in data],
-                              'b', marker='o', markersize=2, label="США")
+                              'g', marker='o', markersize=3, label="США")
                 self._ax.plot([int(x[0]) for x in new_data], [x[1] for x in new_data],
-                              '--b', marker='o', markersize=2)
+                              '--g', marker='o', markersize=3)
             else:
                 self._ax.plot(range(data[0][0], data[-1][0] + 1), [x[1] for x in data],
-                              'k', marker='o', markersize=2, label="Китай")
+                              'k', marker='o', markersize=3, label="Китай")
                 self._ax.plot([int(x[0]) for x in new_data], [x[1] for x in new_data],
-                              '--k', marker='o', markersize=2)
+                              '--k', marker='o', markersize=3)
 
     def run(self):
         self.mainloop()
 
 
 if __name__ == '__main__':
-    matplotlib.rcParams.update({'font.size': 6})
-    a = StatisticWindow(3, 6)
-    a.run()
+    pass
