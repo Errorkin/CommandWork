@@ -1,10 +1,9 @@
 import tkinter as tk
-
 from tkinter import ttk
 from tkinter import messagebox
 
 from Vova_variant import VovaUI
-
+import vanya_test_build
 
 class App(tk.Tk):
     def __init__(self):
@@ -79,12 +78,14 @@ class App(tk.Tk):
                 years = int(years)
                 VovaUI.StatisticWindow(n, years)  # Запуск нового окна для варианта 11
         elif variant == "Ваня":
-            print("Hello!")
+            vanya_test_build.start()
 
     def run(self):
         self.mainloop()
 
 
+
 if __name__ == "__main__":
     app = App()
     app.run()
+
