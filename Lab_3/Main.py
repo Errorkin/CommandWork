@@ -71,22 +71,18 @@ class App(tk.Tk):
         years = self._years_entry.get()
         variant = self._choice_combobox.get()
 
-        if not self._is_valid(n, years):
-            messagebox.showerror("Ошибка", "Некорректные данные")
-        else:
-            n = int(n)
-            years = int(years)
-
-            if variant == "Вова":
+        if variant == "Вова":
+            if not self._is_valid(n, years):
+                messagebox.showerror("Ошибка", "Некорректные данные")
+            else:
+                n = int(n)
+                years = int(years)
                 VovaUI.StatisticWindow(n, years)  # Запуск нового окна для варианта 11
-            elif variant == "Ваня":
-                pass
+        elif variant == "Ваня":
+            print("Hello!")
 
     def run(self):
         self.mainloop()
-
-    def _Vanya_task(self, n: int):
-        pass
 
 
 if __name__ == "__main__":
