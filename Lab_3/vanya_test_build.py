@@ -5,7 +5,7 @@ import json
 from tkinter import Tk, Label, StringVar, Entry
 from tkinter import ttk
 from crime_data import data_json
-
+from tkinter import Toplevel
 
 def start():
     crime_data = pd.DataFrame(data_json).T.reset_index()
@@ -90,7 +90,8 @@ def start():
             print("Ошибка: Убедитесь, что введены корректные числа для года и nn.")
 
     # Настроим окно
-    root = Tk()
+    root = Toplevel()
+
     root.title("Статистика преступности")
 
     # Заголовок
