@@ -1,8 +1,9 @@
 import tkinter as tk
-
 from tkinter import ttk
 from tkinter import messagebox
 
+from Vova_variant import VovaUI
+import vanya_test_build
 
 class App(tk.Tk):
     def __init__(self):
@@ -69,36 +70,22 @@ class App(tk.Tk):
         years = self._years_entry.get()
         variant = self._choice_combobox.get()
 
-        if not self._is_valid(n, years):
-            messagebox.showerror("Ошибка", "Некорректные данные")
-        else:
-            n = int(n)
-            years = int(years)
-
-            if variant == "Вова":
-                pass
-            elif variant == "Ваня":
-                pass
+        if variant == "Вова":
+            if not self._is_valid(n, years):
+                messagebox.showerror("Ошибка", "Некорректные данные")
+            else:
+                n = int(n)
+                years = int(years)
+                VovaUI.StatisticWindow(n, years)  # Запуск нового окна для варианта 11
+        elif variant == "Ваня":
+            vanya_test_build.start()
 
     def run(self):
         self.mainloop()
 
-    def _Vova_task(self, n: int):
-        pass
-
-    def _Vanya_task(self, n: int):
-        pass
-
-    """
-        Идея такая:
-        По нажатию кнопки открывать новое окно, и в нем реализовывать свой вариант
-        (строить графики, таблицы и т.п.)
-
-        Чтобы ничего друг другу не поломать, разделил работу на 2 функции выше. 
-        Работаем каждый в своей функции 
-    """
 
 
 if __name__ == "__main__":
     app = App()
     app.run()
+
