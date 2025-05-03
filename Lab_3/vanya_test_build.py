@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import json
-from tkinter import Tk, Label, StringVar, Entry
+from tkinter import Tk, Label, StringVar, Entry, messagebox
 from tkinter import ttk
 from crime_data import data_json
 from tkinter import Toplevel
@@ -87,7 +87,26 @@ def start():
             nn = int(n_input.get())  # Получаем количество лет для прогноза из ввода
             plot_crime_trends_with_forecast(crime_data, target_year, nn)
         except ValueError:
-            print("Ошибка: Убедитесь, что введены корректные числа для года и nn.")
+            messagebox.showerror("Ошибка", "Некорректные данные")
+
+    def calculate_crime_reduction(data):
+        reduction = {}
+        for crime_type in ["Кража", "Убийство", "Мошенничество"]:
+            start_value = data[crime_type].iloc[0]
+            end_value = data[crime_type].iloc[-1]
+            reduction[crime_type] = start_value - end_value  # Вычисляем снижение
+        max_reduction = max(reduction, key=reduction.get)  # Наибольшее снижение
+        min_reduction = min(reduction, key=reduction.get)  # Наименьшее снижение
+        return max_reduction, min_reduction, reduction
+
+    # Добавляем новую функцию для отображения информации о снижении
+    def show_crime_reduction():
+        max_reduction, min_reduction, reduction = calculate_crime_reduction(crime_data)
+        message = (
+            f"Вид преступности с наибольшим снижением: {max_reduction} ({reduction[max_reduction]} случаев)\n"
+            f"Вид преступности с наименьшим снижением: {min_reduction} ({reduction[min_reduction]} случаев)"
+        )
+        messagebox.showinfo("Результаты анализа", message)
 
     # Настроим окно
     root = Toplevel()
@@ -101,7 +120,14 @@ def start():
     # Кнопки
     btn_style = ttk.Style()
     btn_style.configure("TButton", font=("Arial", 12), padding=10, relief="flat", background="#4CAF50", foreground="black")
-
+    # Добавляем кнопку в интерфейс для запуска анализа
+    ttk.Button(
+        root,
+        text="4) Анализ снижения преступности",
+        command=show_crime_reduction
+    ).grid(
+        row=7, column=0, columnspan=2, padx=20, pady=20, ipadx=20, ipady=10
+    )
     ttk.Button(root, text="1) Показать таблицу данных", command=show_table, style="TButton").grid(row=1, column=0, sticky="ew", padx=20, pady=10)
     ttk.Button(root, text="2) Построить график статистики преступности", command=show_trends, style="TButton").grid(row=2, column=0, sticky="ew", padx=20, pady=10)
 
